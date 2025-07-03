@@ -87,13 +87,11 @@ const userSlice = createSlice({
         state.user = action.payload.user;
         state.userLoginRequest = false;
         state.isAuthenticated = true;
-        state.isAuthChecked = true;
       })
       .addCase(userApi.rejected, (state, action) => {
         state.user = null;
         state.userLoginRequest = false;
         state.isAuthenticated = false;
-        state.isAuthChecked = true;
         state.userLoginError =
           action.error.message || 'Не удалось получить данные пользователя';
       })
@@ -121,14 +119,12 @@ const userSlice = createSlice({
         state.isAuthenticated = true;
         state.user = action.payload;
         state.userLoginRequest = false;
-        state.isAuthChecked = true;
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.userLoginRequest = false;
         state.userLoginError =
           action.error.message ||
           'Не удалось выполнить запрос на вход пользователя';
-        state.isAuthChecked = true;
       })
       .addCase(logoutUser.pending, (state) => {
         state.isAuthenticated = true;
