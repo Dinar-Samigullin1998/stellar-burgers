@@ -28,8 +28,8 @@ const App = () => {
   const background = location.state?.background || null;
 
   useEffect(() => {
-    dispatch(checkUserAuthenticated());
     dispatch(getIngredients());
+    dispatch(checkUserAuthenticated());
   }, [dispatch]);
 
   return (
@@ -38,6 +38,8 @@ const App = () => {
       <Routes location={background || location}>
         <Route path='/' element={<ConstructorPage />} />
         <Route path='/feed' element={<Feed />} />
+        <Route path='/feed/:number' element={<OrderInfo />} />
+        <Route path='/ingredients/:id' element={<IngredientDetails />} />
         <Route
           path='/login'
           element={
@@ -65,7 +67,7 @@ const App = () => {
         <Route
           path='/reset-password'
           element={
-            <ProtectedRoute onlyUnAuth>
+            <ProtectedRoute>
               <ResetPassword />
             </ProtectedRoute>
           }
@@ -86,7 +88,6 @@ const App = () => {
             </ProtectedRoute>
           }
         />
-        <Route path='*' element={<NotFound404 />} />
         <Route
           path='/profile/orders/:number'
           element={
@@ -95,8 +96,8 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+        <Route path='*' element={<NotFound404 />} />
       </Routes>
-
       {background && (
         <Routes>
           <Route
@@ -131,6 +132,7 @@ const App = () => {
               </ProtectedRoute>
             }
           />
+          <Route path='*' element={<NotFound404 />} />
         </Routes>
       )}
     </div>
