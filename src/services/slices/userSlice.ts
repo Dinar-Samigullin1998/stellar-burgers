@@ -67,7 +67,7 @@ export const logoutUser = createAsyncThunk(
   }
 );
 
-const userSlice = createSlice({
+export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
@@ -119,12 +119,14 @@ const userSlice = createSlice({
         state.isAuthenticated = true;
         state.user = action.payload;
         state.userLoginRequest = false;
+        state.isAuthChecked = true;
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.userLoginRequest = false;
         state.userLoginError =
           action.error.message ||
           'Не удалось выполнить запрос на вход пользователя';
+        state.isAuthChecked = true;
       })
       .addCase(logoutUser.pending, (state) => {
         state.isAuthenticated = true;
