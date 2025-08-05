@@ -4,6 +4,7 @@ const closeModal = '[data-cy=modal-close]';
 const closeOverlay = '[data-cy=modal-overlay]';
 const orderNumber = '[data-cy=order-number]';
 const orderButton = '[data-cy=order-button]';
+const modal = '[data-cy="modal"]';
 
 describe('Тестируем доступность приложения', () => {
   beforeEach(() => {
@@ -67,24 +68,31 @@ describe('Тестируем работу модальных окон', () => {
   });
 
   it('Тестируем открытие модального окна ингредиента', () => {
-    cy.contains('Детали ингредиента').should('not.exist');
     cy.get('[data-cy="643d69a5c3f7b9001cfa0940"]').click();
-    cy.contains('Детали ингредиента').should('exist');
-    cy.get('[data-cy="modal"]').should('be.visible');
+    cy.get(modal).should('be.visible');
+    cy.get('[data-cy="ingredient-details"]').should('be.visible');
+    cy.get('[data-cy="ingredient-details"]').should(
+      'contain',
+      'Флюоресцентная булка R2-D3'
+    );
+    cy.get('[data-cy="ingredient-calories"]').should('contain', '643');
+    cy.get('[data-cy="ingredient-proteins"]').should('contain', '44');
+    cy.get('[data-cy="ingredient-fat"]').should('contain', '26');
+    cy.get('[data-cy="ingredient-carbohydrates"]').should('contain', '85');
   });
 
   it('Тестируем закрытие модального окна по крестику', () => {
     cy.get('[data-cy="643d69a5c3f7b9001cfa0940"]').click();
-    cy.contains('Детали ингредиента').should('exist');
+    cy.get(modal).should('be.visible');
     cy.get(closeModal).click();
-    cy.contains('Детали ингредиента').should('not.exist');
+    cy.get(modal).should('not.exist');
   });
 
   it('Тестируем закрытие модального окна по оверлею', () => {
     cy.get('[data-cy="643d69a5c3f7b9001cfa0940"]').click();
-    cy.contains('Детали ингредиента').should('exist');
+    cy.get(modal).should('be.visible');
     cy.get(closeOverlay).click({ force: true });
-    cy.contains('Детали ингредиента').should('not.exist');
+    cy.get(modal).should('not.exist');
   });
 });
 
