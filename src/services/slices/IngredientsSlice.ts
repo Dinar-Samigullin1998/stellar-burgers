@@ -10,7 +10,7 @@ export const getIngredients = createAsyncThunk(
   }
 );
 
-type TIngredientsState = {
+export type TIngredientsState = {
   ingredients: TIngredient[];
   request: boolean;
   error: string | null;

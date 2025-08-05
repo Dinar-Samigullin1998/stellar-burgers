@@ -16,7 +16,7 @@ export const getOrderByNumber = createAsyncThunk(
   }
 );
 
-type TFeedState = {
+export type TFeedState = {
   orders: TOrder[];
   total: number;
   totalToday: number;
@@ -25,7 +25,7 @@ type TFeedState = {
   orderModal: TOrder | null;
 };
 
-export const initialState: TFeedState = {
+const initialState: TFeedState = {
   orders: [],
   total: 0,
   totalToday: 0,

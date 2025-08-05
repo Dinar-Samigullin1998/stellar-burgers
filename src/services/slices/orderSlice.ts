@@ -4,7 +4,7 @@ import { getOrdersApi } from '../../utils/burger-api';
 
 export const orderHistory = createAsyncThunk('user/orderHistory', getOrdersApi);
 
-type TOrderState = {
+export type TOrderState = {
   orders: TOrder[];
   isloading: boolean;
   error: null | string | undefined;
@@ -23,16 +23,17 @@ export const orderSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(orderHistory.pending, (state) => {
-        (state.isloading = true), (state.error = null);
+        state.isloading = true;
+        state.error = null;
       })
       .addCase(orderHistory.fulfilled, (state, action) => {
-        (state.orders = action.payload),
-          (state.isloading = false),
-          (state.error = null);
+        state.orders = action.payload;
+        state.isloading = false;
+        state.error = null;
       })
       .addCase(orderHistory.rejected, (state, action) => {
-        (state.error = action.error.message || 'Error orders history'),
-          (state.isloading = false);
+        state.error = action.error.message || 'Error orders history';
+        state.isloading = false;
       });
   },
   selectors: {
